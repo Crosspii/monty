@@ -12,7 +12,7 @@ void push(stack_t **stack, unsigned int nline)
 
 	if (stack == NULL)
 	{
-		fpritnf(stderr, "L%d: stack not found\n", nline);
+		fprintf(stderr, "L%d: stack not found\n", nline);
 		exit(EXIT_FAILURE);
 	}
 
