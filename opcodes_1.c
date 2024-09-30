@@ -1,79 +1,67 @@
 #include "monty.h"
 
 /**
- * pint - pritns value at top of stack
- * @stack: pointer to the head node pointer of stack
- * @nline: line number
- * Return: NAIN
- */
-void pint(stack_t **stack, unsigned int nline)
+  * push - pushes a node to the top of the stack.
+  * @stack: pointer to the head node pointer of the stack.
+  * @nline: line number of the command.
+  *
+  * Return: nothing.
+  */
+void push(stack_t **stack, unsigned int nline)
 {
 	stack_t *temp;
 
-	if (stack == NULL || *stack == NULL)
+	if (stack == NULL)
 	{
-		fprintf(stderr, "L%d: can't pint, stack empty\n", nline);
+		fprintf(stderr, "L%d: stack not found\n", nline);
 		exit(EXIT_FAILURE);
 	}
+
+	temp = malloc(sizeof(stack_t));
+	if (temp == NULL)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		free_stack(stack);
+		exit(EXIT_FAILURE);
+	}
+
+	temp->next = *stack;
+	temp->prev = NULL;
+	temp->n = arg.arg;
+	if (*stack)
+		(*stack)->prev = temp;
+	*stack = temp;
+}
+
+/**
+  * pall - prints the data of all nodes in the stack.
+  * @stack: pointer to the head node pointer of the stack.
+  * @nline: line number of the command.
+  *
+  * Return: nothing.
+  */
+void pall(stack_t **stack, unsigned int nline)
+{
+	stack_t *temp;
+	(void)nline;
 
 	temp = *stack;
 	while (temp)
 	{
-		if (temp->prev = NULL)
-			break;
-		temp = temp->prev;
-	}
-
-	printf("%d\n", temp->n);
-}
-
-
-/**
-  * pop - removes top element of stack.
-  * @stack: pointer to the head node pointer of stack
-  * @nline: line number
-  *
-  * Return: NAIN
-  */
-void pop(stack_t **stack, unsigned int nline)
-{
-	if (stack == NULL || *stack == NULL)
-	{
-		fprintf(stderr, "L%d: can't pop an empty stack\n", nline);
-		exit(EXIT_FAILURE);
-	}
-	if ((*stack)->next != NULL)
-	{
-		*stack = (*stack)->next;
-		free((*stack)->prev);
-		(*stack)->prev = NULL;
-	}
-	else
-	{
-		free(*stack);
-		*stack = NULL;
+		printf("%d\n", temp->n);
+		temp = temp->next;
 	}
 }
 
-
 /**
-  * swap - swaps top 2 elements of a stack.
-  * @stack: pointer to the head node pointer of stack
-  * @nline: line number
+  * nop - does nothing.
+  * @stack: pointer to the head node pointer of the stack.
+  * @nline: line number of the command.
   *
-  * Return: NAIN
+  * Return: nothing.
   */
-void swap(stack_t **stack, unsigned int nline)
+void nop(stack_t **stack, unsigned int nline)
 {
-	int temp;
-
-	if (stack == NULL || *stack == NULL || !((*stack)->next))
-	{
-		fprintf(stderr, "L%d: can't swap, stack too short\n", nline);
-		exit(EXIT_FAILURE);
-	}
-
-	temp = (*stack)->n;
-	(*stack)->n = (*stack)->next->n;
-	(*stack)->next->n = temp;
+	(void)stack;
+	(void)nline;
 }

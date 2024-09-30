@@ -8,14 +8,14 @@
 #include <stdbool.h>
 #include <ctype.h>
 
-
 /**
- * struct arg_s - argument represenatation.
- * @arg: integer.
- * @flag: option that corresponds to a specific command
- * Description: struture fr arguemnt paramters
- * passed to monty program
- */
+  * struct arg_s - Represents an argument.
+  * @arg: Integer value of the argument.
+  * @flag: Option corresponding to a specific command.
+  *
+  * Description: Structure for argument parameters
+  * passed to the Monty interpreter.
+  */
 typedef struct arg_s
 {
 	int arg;
@@ -25,7 +25,7 @@ typedef struct arg_s
 extern arg_t arg;
 
 /**
- * struct stack_s - doubly linked list represenattion of a stack or queue
+ * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
  * @prev: points to the previous element of the stack (or queue)
  * @next: points to the next element of the stack (or queue)
@@ -55,10 +55,10 @@ typedef struct instruction_s
 } instruction_t;
 
 /**
-  * struct meta_s - contents of file and buffer data.
-  * @buf: pointer to array of data read from buffer.
-  * @stack: pointer to top of stack.
-  * @file: pointer to file.
+  * struct meta_s - Contains file and buffer data.
+  * @buf: Pointer to the buffer containing data read from the file.
+  * @stack: Pointer to the top of the stack.
+  * @file: Pointer to the file being processed.
   */
 typedef struct meta_s
 {
@@ -68,19 +68,20 @@ typedef struct meta_s
 } meta_t;
 
 /**
-  * struct line - contents of a line and number.
-  * @content: array of tokens read from line.
-  * @number: line number.
+  * struct line_s - Represents the contents of a line and its number.
+  * @tokens: Array of tokens parsed from the line.
+  * @num: Line number in the source file.
   *
-  * Description: structure for data in a line.
+  * Description: Structure for holding data related to a line
+  * in the input file.
   */
 typedef struct line_s
 {
-	char **content;
-	unsigned int number;
+	char **tokens;
+	unsigned int num;
 } line_t;
 
-/* Function pointer type definition */
+/* Function pointer type definition for opcode functions */
 typedef void (*op_func_t)(stack_t **, unsigned int);
 
 /* get_operations.c */

@@ -1,19 +1,20 @@
 #include "monty.h"
 
 /**
- * parseline - parses then tokenizes a line of test storing it
- * int a line struct
- * @line: a struct containing content and line number
- * @buffer: string of text read from a script file
- * Return: nothing.
- */
+  * parseline - Parses and tokenizes a line of text, storing
+  * the tokens in a line struct.
+  * @line: Pointer to the struct containing content and line number.
+  * @buffer: String of text read from the script file.
+  *
+  * Return: Nothing.
+  */
 void parseline(line_t *line, char *buffer)
 {
 	unsigned int i;
 	char *token = NULL;
 
-	line->content = malloc(sizeof(char *) * 3);
-	if (!line->content)
+	line->tokens = malloc(sizeof(char *) * 3);
+	if (!line->tokens)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
@@ -22,18 +23,19 @@ void parseline(line_t *line, char *buffer)
 	token = strtok(buffer, " '\n'");
 	for (i = 0; token && i < 2; i++)
 	{
-		line->content[i] = token;
+		line->tokens[i] = token;
 		token = strtok(NULL, " \n");
 	}
 
-	line->content[i] = NULL;
+	line->tokens[i] = NULL;
 }
 
 /**
- * parsefile - reads and parses file line by line.
- * @file: script to be read
- * Return: nothing.
- */
+  * parsefile - Reads and parses a file line by line.
+  * @file: Pointer to the script file to be read.
+  *
+  * Return: Nothing.
+  */
 void parsefile(FILE *file)
 {
 	size_t size = 0;
@@ -47,8 +49,8 @@ void parsefile(FILE *file)
 		exit(EXIT_FAILURE);
 	}
 
-	line.number = 0;
-	line.content = NULL;
+	line.num = 0;
+	line.tokens = NULL;
 
 	meta->file = file;
 	meta->stack = NULL;
@@ -56,10 +58,10 @@ void parsefile(FILE *file)
 
 	while (getline(&(meta->buf), &size, meta->file) != -1)
 	{
-		line.number++;
+		line.num++;
 		parseline(&line, meta->buf);
-		if (line.content)
-			get_op_func(line, meta)(&(meta->stack), line.number);
+		if (line.tokens)
+			get_op_func(line, meta)(&(meta->stack), line.num);
 	}
 
 	free(meta->buf);

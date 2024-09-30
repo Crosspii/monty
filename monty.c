@@ -1,11 +1,13 @@
 #include "monty.h"
 
 /**
- * main - opens a monty script file for parsing
- * @argc: number of arguments.
- * @argv: the argument vector
- * Return: EXIT_SUCCESS or EXIT_FAILURE if failed
- */
+  * main - opens a monty script file for parsing.
+  * @argc: number of arguments.
+  * @argv: argument vector.
+  *
+  * Return: EXIT_SUCCESS on success or
+  * EXIT_FAILURE on failure.
+  */
 int main(int argc, char *argv[])
 {
 	FILE *file;
@@ -15,7 +17,6 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
-
 
 	file = fopen(argv[1], "r");
 	if (!file)

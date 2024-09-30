@@ -2,11 +2,11 @@
 
 /**
   * get_op_func - searches and matches text to opcode
-  * then returns corresponding function.
-  * @line: struct containing line content and number.
-  * @meta: struct containing all allocated memory.
+  * and returns the corresponding function pointer.
+  * @line: struct containing line content and line number.
+  * @meta: struct containing all allocated memory resources.
   *
-  * Return: pointer to relevant function.
+  * Return: pointer to the relevant function for the opcode.
   */
 void (*get_op_func(line_t line, meta_t *meta))(stack_t **, unsigned int)
 {
@@ -37,16 +37,16 @@ void (*get_op_func(line_t line, meta_t *meta))(stack_t **, unsigned int)
 
 	while (ops[i].opcode)
 	{
-		if (strcmp(ops[i].opcode, line.content[0]) == 0)
+		if (strcmp(ops[i].opcode, line.tokens[0]) == 0)
 		{
 			check_push(line, meta, ops[i].opcode);
 			if (arg.flag == 1 && strcmp(ops[i].opcode, "push") == 0)
 			{
-				if (line.content)
-					free(line.content);
+				if (line.tokens)
+					free(line.tokens);
 				return (to_queue);
 			}
-			free(line.content);
+			free(line.tokens);
 			return (ops[i].f);
 		}
 
@@ -54,8 +54,8 @@ void (*get_op_func(line_t line, meta_t *meta))(stack_t **, unsigned int)
 	}
 
 	fprintf(stderr, "L%d: unknown instruction %s\n",
-			line.number, line.content[0]);
-	free(line.content);
+			line.num, line.tokens[0]);
+	free(line.tokens);
 	free(meta->buf);
 	free_stack(&(meta->stack));
 	fclose(meta->file);

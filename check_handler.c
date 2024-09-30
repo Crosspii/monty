@@ -3,22 +3,22 @@
 arg_t arg = {0, 0};
 
 /**
-  * is_comment - checks if line is a comment.
-  * @line: struct containing line content and number.
+  * is_comment - Checks if the line is a comment.
+  * @line: Struct containing the line content and number.
   *
-  * Return: true if comment otherwise false.
+  * Return: true if the line is a comment, otherwise false.
   */
 bool is_comment(line_t line)
 {
-	if (!line.content[0])
+	if (!line.tokens[0])
 	{
-		free(line.content);
+		free(line.tokens);
 		return (true);
 	}
 
-	if (line.content[0][0] == '#')
+	if (line.tokens[0][0] == '#')
 	{
-		free(line.content);
+		free(line.tokens);
 		return (true);
 	}
 
@@ -26,10 +26,10 @@ bool is_comment(line_t line)
 }
 
 /**
-  * check_argument - checks arg validity.
-  * @token: argument to be checked.
+  * check_argument - Validates the argument.
+  * @token: Argument to be checked.
   *
-  * Return: true if valid otherwise false.
+  * Return: true if valid, otherwise false.
   */
 bool check_argument(char *token)
 {
@@ -53,20 +53,20 @@ bool check_argument(char *token)
 
 
 /**
-  * check_push - check if push opcode is being used and sets
-  * global argument variable if true.
-  * @line: struct containg line content and number.
-  * @opcode: opcode to compare.
-  * @meta: struct containing all alocated memory.
+  * check_push - Checks if the push opcode is being used and sets
+  * the global argument variable if true.
+  * @line: Struct containing the line content and number.
+  * @opcode: Opcode to compare.
+  * @meta: Struct containing all allocated memory.
   *
-  * Return: NAIN.
+  * Return: None.
   */
 void check_push(line_t line, meta_t *meta, char *opcode)
 {
-	if ((strcmp(opcode, "push") == 0) &&  !check_argument(line.content[1]))
+	if ((strcmp(opcode, "push") == 0) &&  !check_argument(line.tokens[1]))
 	{
-		free(line.content);
-		fprintf(stderr, "L%d: usage: push integer\n", line.number);
+		free(line.tokens);
+		fprintf(stderr, "L%d: usage: push integer\n", line.num);
 		free(meta->buf);
 		free_stack(&(meta->stack));
 		fclose(meta->file);
@@ -74,14 +74,14 @@ void check_push(line_t line, meta_t *meta, char *opcode)
 		exit(EXIT_FAILURE);
 	}
 	else if (strcmp(opcode, "push") == 0)
-		arg.arg = atoi(line.content[1]);
+		arg.arg = atoi(line.tokens[1]);
 }
 
 /**
-  * is_alpha - checks if int is an alphabet.
-  * @c: int
+  * is_alpha - Checks if the character is an alphabet.
+  * @c: Character to check.
   *
-  * Return: 1 if yes, 0 otherwise.
+  * Return: 1 if it is an alphabet, 0 otherwise.
   */
 int is_alpha(int c)
 {

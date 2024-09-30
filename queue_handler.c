@@ -1,11 +1,11 @@
 #include "monty.h"
 
 /**
-  * add_queue - changes mode of push to queue
-  * @stack: pointer to stack.
-  * @nline: line number.
+  * add_queue - Sets the mode to push to the queue
+  * @stack: Double pointer to the stack.
+  * @nline: Line number of the command.
   *
-  * Return: NAIN!!
+  * Return: None
   */
 void add_queue(stack_t **stack, unsigned int nline)
 {
@@ -16,11 +16,11 @@ void add_queue(stack_t **stack, unsigned int nline)
 }
 
 /**
-  * to_queue - pushes to queue instead of stack
-  * @stack: pointer to the head node pointer of stack
-  * @nline: line number
+  * to_queue - Adds a new element to the queue instead of the stack
+  * @stack: Double pointer to the head node of the stack
+  * @nline: Line number of the command
   *
-  * Return: NAIN
+  * Return: None
   */
 void to_queue(stack_t **stack, unsigned int nline)
 {
